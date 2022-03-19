@@ -1253,7 +1253,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var timerID = null;
-var path = "http://localhost:8080/sounds/audio.mp3";
+var path = "https://osmanmez.github.io/Socces-ScoreBoard/sounds/audio.mp3";
 var audio = new Audio(path);
 
 //
@@ -1414,31 +1414,38 @@ var CountDownTimer = function (_React$Component) {
                     time.hours.toString().padStart(2, '0') + ":" + time.minutes.toString().padStart(2, '0') + ":" + time.seconds.toString().padStart(2, '0'),
                     " "
                 ),
+                "  ",
                 over ? _react2.default.createElement(
                     "div",
                     { className: "pb-4 text-warning fw-bold" },
-                    "\xA1Juego terminado!"
+                    " \xA1Juego terminado! "
                 ) : '',
+                "   ",
                 _react2.default.createElement(
                     "p",
                     { className: "stopwatch-button" },
                     _react2.default.createElement(
                         "button",
-                        { disabled: over, onClick: function onClick() {
+                        { disabled: over,
+                            onClick: function onClick() {
                                 return _this3.setState({ paused: !paused });
                             } },
                         " ",
                         paused ? 'CONTINUAR' : 'DETENER',
-                        "  "
+                        " "
                     ),
+                    "  ",
                     _react2.default.createElement(
                         "button",
-                        { disabled: disabled, onClick: function onClick() {
+                        { disabled: disabled,
+                            onClick: function onClick() {
                                 return _this3.reset();
                             } },
                         " INICIAR "
-                    )
-                )
+                    ),
+                    " "
+                ),
+                " "
             );
         }
     }]);
