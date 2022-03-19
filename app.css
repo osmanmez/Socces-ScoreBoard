@@ -11,8 +11,8 @@ body {
 
 .scoreboard {
     background: #333333;
-    width: 700px;
-    margin: 70px auto;
+    /* width: 700px;
+    margin: 70px auto; */
     box-shadow: 0 4px 0px #333;
     border-radius: 15px;
 }
@@ -34,26 +34,34 @@ body {
     font-weight: normal;
 }
 
-.header .stats,
+.text-1 {
+    font-size: 14px;
+}
+
+
+/* .header .stats,
 .header .stopwatch {
     width: 170px;
-}
+} */
 
 .stats {
     margin-top: 0;
     font-weight: normal;
+    width: 100%;
 }
 
 .stats td:first-child {
     text-align: right;
-    font-weight: normal;
+    font-weight: bold;
     letter-spacing: 2px;
     color: #666;
-    font-size: .7em;
+    font-size: 1.2em;
 }
 
 .stats td:last-child {
     text-align: left;
+    width: 40%;
+    font-size: 1.4em;
 }
 
 .stopwatch {
@@ -63,9 +71,26 @@ body {
     border-radius: 0 15px 0 0;
 }
 
+.players {
+    background: #2f2f2f;
+}
+
+.stopwatch-button {
+    font-family: monospace;
+    font-size: 1.8em;
+}
+
 .stopwatch-time {
     font-family: monospace;
-    font-size: 2em;
+    font-size: 3em;
+    font-weight: 500;
+}
+
+.stopwatch-time2 {
+    font-family: monospace;
+    font-size: 3em;
+    font-weight: 500;
+    color: red
 }
 
 .stopwatch button {
@@ -87,12 +112,25 @@ body {
     cursor: pointer;
 }
 
+.stopwatch button:disabled,
+.stopwatch button[disabled] {
+    background-color: transparent;
+    color: #666666;
+    cursor: default;
+}
+
 .stopwatch h2 {
     font-size: .6em;
     margin: 0;
     font-weight: normal;
     letter-spacing: 2px;
     color: #666;
+}
+
+.title {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #fff;
 }
 
 .player {
@@ -119,7 +157,7 @@ body {
 }
 
 .player-score {
-    width: 190px;
+    /* width: 190px; */
     background: blue;
 }
 

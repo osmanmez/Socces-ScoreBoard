@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 let timerID = null
+let path = "http://localhost:8080/sounds/audio.mp3";
+let audio = new Audio(path);
 
+
+//
 export default class CountDownTimer extends React.Component {
+            
     // Set up state variables
     constructor(props) {
         super(props);
+    
         const { hours = 0, minutes = 0, seconds = 0 } = props;
         this.state = {
             time: {
@@ -13,20 +19,36 @@ export default class CountDownTimer extends React.Component {
                 minutes: parseInt(minutes, 10),
                 seconds: parseInt(seconds, 10)
             },
-            paused: false,
-            over: false
+            paused: true,
+            over: true,
+            play: false,
+            disabled: false,
+            extra: false
         };
     }
 
     tick() {
-        const { time, paused, over } = this.state;
-        console.log(time, paused, over);
+//        const [disabled, setDisabled] = useState(false);
+//        const [users, setUsers] = this.useState(false);
+        
+        const { time, paused, over, play } = this.state;
+      //  console.log(time, paused, over, play);
+       // this.setState({disabled: false});    
         // Do nothing if paused
         if (paused || over) return;
 
+
+        if (time.hours === 0 && time.minutes === 0 && time.seconds < 25 && !play) {
+            audio.play();
+            this.setState({ play: true });
+            this.setState({ extra: true });
+        } 
         // Time up
-        if (time.hours === 0 && time.minutes === 0 && time.seconds === 0) {
+        if (time.hours === 0 && time.minutes === 0 && time.seconds === 0 ) {
             this.setState({ over: true });
+            this.setState({paused: true});
+            this.setState({disabled: false});
+
         } else if (time.minutes === 0 && time.seconds === 0) {
             // decrement hour
             this.setState({
@@ -55,6 +77,7 @@ export default class CountDownTimer extends React.Component {
                 }
             });
         }
+
     };
 
     // Resets counter to original state
@@ -70,29 +93,36 @@ export default class CountDownTimer extends React.Component {
                 seconds: parseInt(seconds, 10)
             },
             paused: false,
-            over: false
+            over: false,
+            play: false,
+            extra: false,
         });
     };
 
-    componentDidMount() {
+    componentDidMount() {        
         timerID = setInterval(() => this.tick(), 1000);
     }
+
 
     componentWillUnmount() {
         // clear time on unmount
         timerID = null
     }
 
+
+
     render() {
-        const {
-            state: { time, paused, over }, reset } = this;
+//      const [disable, setDisable] = useState(0);
+
+        const { state: { time, paused, over, play, disabled, extra }, reset } = this;
+        
         return ( 
                 <div>
-                    <p> { `${time.hours.toString().padStart(2, '0')}:${time.minutes.toString().padStart(2, '0')}:${time.seconds.toString().padStart(2, '0')}` } </p> 
-                    <div> { over ? "Juego terminado!" : '' } </div> 
-                    <p>
-                        <button onClick = { () => this.setState({ paused: !paused }) } > { paused ? 'START' : 'PAUSE' }  </button> 
-                        <button onClick = { () => this.reset() } > RESET </button>
+                    <p className={`${!extra ? "stopwatch-time" : "stopwatch-time2"}`}> { `${time.hours.toString().padStart(2, '0')}:${time.minutes.toString().padStart(2, '0')}:${time.seconds.toString().padStart(2, '0')}` } </p> 
+                     { over ? <div className='pb-4 text-warning fw-bold'>¡Juego terminado!</div> : '' }  
+                    <p className='stopwatch-button' >
+                        <button disabled={over} onClick = { () => this.setState({ paused: !paused }) } > { paused ? 'CONTINUAR' : 'DETENER' }  </button> 
+                        <button disabled={disabled}  onClick = { () => this.reset()}   > INICIAR </button>
                     </p> 
                 </div>
         );
