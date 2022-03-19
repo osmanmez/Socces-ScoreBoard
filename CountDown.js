@@ -1,7 +1,7 @@
 import React from 'react'
 
 export const CountDown = ({ hours = 0, minutes = 0, seconds = 0 }) => {
-    const [paused, setPaused] = React.useState(false);
+    const [paused, setPaused] = React.useState(true);
     const [over, setOver] = React.useState(false);
     const [time, setTime] = React.useState({
         hours: parseInt(hours),
@@ -43,7 +43,9 @@ export const CountDown = ({ hours = 0, minutes = 0, seconds = 0 }) => {
     };
 
     React.useEffect(() => {
+
         let timerID = setInterval(() => tick(), 1000);
+        console.log(timerID);
         return () => clearInterval(timerID);
     });
 

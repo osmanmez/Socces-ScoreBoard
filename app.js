@@ -1,7 +1,11 @@
+import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import CountDownTimer from "./CountDownClass";
+import useSound from 'use-sound';
+//import boopSfx from './sounds/cuenta_regresiva.mp3';
+
 //CSS
 import "./app.css";
 
@@ -24,10 +28,6 @@ const PLAYERS = [
 ];
 
 let nextId = 4;
-
-class CountDown extends React.Component {
-
-}
 
 class Stopwatch extends React.Component {
   constructor(props) {
@@ -76,13 +76,17 @@ class Stopwatch extends React.Component {
   }
 
   render() {
-    let seconds = Math.floor(this.state.elapsedTime / 1000);
-    const hoursMinSecs = {hours:5, minutes: 0, seconds: 0}
+    // let seconds = Math.floor(this.state.elapsedTime / 1000);
+    // const hoursMinSecs = {hours:5, minutes: 0, seconds: 0}
     //<CountDownTimer hoursMinSecs={hoursMinSecs}/>
+    // {this.state.running ? (<button onClick={this.onStop}> Stop </button>) : (<button onClick={this.onStart}> Start </button>)}<button onClick={this.onReset}> Reset </button>{" "}
+
     return (
-      <div className="stopwatch">
-        <h2> Timer </h2> <div className="stopwatch-time">  {seconds}  </div>
-        {this.state.running ? (<button onClick={this.onStop}> Stop </button>) : (<button onClick={this.onStart}> Start </button>)}<button onClick={this.onReset}> Reset </button>{" "}
+      <div className="stopwatch pr-4">
+        <h2 className="text-center"> Timer </h2>
+        <div className="text-center">
+          <CountDownTimer minutes={4} />
+        </div>
       </div>
     );
   }
@@ -131,16 +135,16 @@ function Stats(props) {
   const totalPoints = props.players.reduce(function (total, player) {
     return (total += player.score);
   }, 0);
-  
+
   return (
     <table className="stats">
       <tbody>
         <tr>
-          <td> Teams: </td> 
+          <td> EQUIPOS:{" "} </td>
           <td> {totalPlayers} </td>
         </tr>
         <tr>
-          <td> Total Points: </td>
+          <td> PUNTOS:{" "} </td>
           <td> {totalPoints} </td>
         </tr>
       </tbody>
@@ -155,14 +159,24 @@ Stats.propTypes = {
 function Header(props) {
   return (
     <div className="header">
-      <Stats players={props.players} /> <h1> {props.title} </h1> <Stopwatch />
+      <Stats players={props.players} />
     </div>
   );
 }
 
 Header.propTypes = {
-  title: PropTypes.string.isRequired,
-  players: PropTypes.array.isRequired,
+  players: PropTypes.array.isRequired
+};
+
+
+function Title(props) {
+  return (
+    <h1 className="title">-- {props.title} --</h1>
+  );
+}
+
+Title.propTypes = {
+  title: PropTypes.string.isRequired
 };
 
 function Counter(props) {
@@ -196,7 +210,7 @@ Counter.propTypes = {
   onChange: PropTypes.func,
 };
 
- function Player(props) {
+function Player(props) {
   return (
     <div className="player">
       <div className="player-name">
@@ -229,7 +243,7 @@ class Application extends React.Component {
   }
 
   onScoreChange(index, delta) {
-    console.log("onScoreChange", index, delta);
+    //console.log("onScoreChange", index, delta);
     this.state.players[index].score += delta;
     this.setState(this.state);
   }
@@ -251,32 +265,43 @@ class Application extends React.Component {
 
   render() {
     return (
-      <div className="scoreboard">
-        <Header title={this.props.title} players={this.state.players} />{" "}
-        <div className="players">
-          {this.state.players.map(
-            function (player, index) {
-              return (
-                <Player
-                  onScoreChange={function (delta) {
-                    this.onScoreChange(index, delta);
-                  }.bind(this)}
-                  onRemove={function () {
-                    this.onRemovePlayer(index);
-                  }.bind(this)}
-                  name={player.name}
-                  score={player.score}
-                  key={player.id}
-                />
-              );
-            }.bind(this)
-          )}{" "}
-          <AddPlayerForm onAdd={this.onPlayerAdd} />
-        </div>{" "}
+      <div className="container my-5 bg-dark rounded-3">
+          <div className="row">
+            <div className="col text-center py-3"><Title title={this.props.title} /></div>
+          </div>
+          <div className="row px-2">
+            <div className="col-12 col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4 pb-4"><Header players={this.state.players} /></div>
+            <div className="col-12 col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8 pb-4"><Stopwatch /></div>
+          </div>
+          <div className="row">
+            <div className="col players">
+                  {this.state.players.map(
+                    function (player, index) {
+                      return (
+                        <Player
+                          onScoreChange={function (delta) {
+                            this.onScoreChange(index, delta);
+                          }.bind(this)}
+                          onRemove={function () {
+                            this.onRemovePlayer(index);
+                          }.bind(this)}
+                          name={player.name}
+                          score={player.score}
+                          key={player.id}
+                        />
+                      );
+                    }.bind(this)
+                  )}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col"><AddPlayerForm onAdd={this.onPlayerAdd} /></div>
+          </div>
       </div>
     );
   }
 }
+
 Application.propTypes = {
   title: PropTypes.string,
   initialPlayers: PropTypes.arrayOf(
@@ -287,7 +312,7 @@ Application.propTypes = {
     })
   ),
 };
-Application.defaultProps = { title: "Scoreboard" };
+Application.defaultProps = { title: "MARCADOR" };
 
 ReactDOM.render(
   <Application initialPlayers={PLAYERS} />,

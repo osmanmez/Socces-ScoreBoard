@@ -2,7 +2,7 @@ module.exports = {
     entry: './app.js',
 
     output: {
-        //path:'build',
+        // path: 'build',
         filename: 'bundle.js'
     },
 
@@ -10,7 +10,7 @@ module.exports = {
         loaders: [{
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loaders: ['react-hot-loader', 'babel-loader']
+                loaders: ['react-hot-loader/webpack', 'babel-loader?presets[]=react'],
             },
             {
                 test: /\.css$/,
