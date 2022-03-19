@@ -1253,7 +1253,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var timerID = null;
-var path = "https://osmanmez.github.io/Socces-ScoreBoard/sounds/audio.mp3";
+var path = "https://osmanmez.github.io/Socces-ScoreBoard/sounds/contador.mp3";
 var audio = new Audio(path);
 
 //
@@ -1267,16 +1267,14 @@ var CountDownTimer = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (CountDownTimer.__proto__ || Object.getPrototypeOf(CountDownTimer)).call(this, props));
 
-        var _props$hours = props.hours,
-            hours = _props$hours === undefined ? 0 : _props$hours,
-            _props$minutes = props.minutes,
+        var _props$minutes = props.minutes,
             minutes = _props$minutes === undefined ? 0 : _props$minutes,
             _props$seconds = props.seconds,
             seconds = _props$seconds === undefined ? 0 : _props$seconds;
 
         _this.state = {
             time: {
-                hours: parseInt(hours, 10),
+                // hours: parseInt(hours, 10),
                 minutes: parseInt(minutes, 10),
                 seconds: parseInt(seconds, 10)
             },
@@ -1306,30 +1304,20 @@ var CountDownTimer = function (_React$Component) {
 
             if (paused || over) return;
 
-            if (time.hours === 0 && time.minutes === 0 && time.seconds < 25 && !play) {
+            if (time.minutes === 0 && time.seconds <= 10 && !play) {
                 audio.play();
                 this.setState({ play: true });
                 this.setState({ extra: true });
             }
             // Time up
-            if (time.hours === 0 && time.minutes === 0 && time.seconds === 0) {
+            if (time.minutes === 0 && time.seconds === 0) {
                 this.setState({ over: true });
                 this.setState({ paused: true });
                 this.setState({ disabled: false });
-            } else if (time.minutes === 0 && time.seconds === 0) {
-                // decrement hour
-                this.setState({
-                    time: {
-                        hours: time.hours - 1,
-                        minutes: 59,
-                        seconds: 59
-                    }
-                });
             } else if (time.seconds === 0) {
                 // decrement minutes
                 this.setState({
                     time: {
-                        hours: time.hours,
                         minutes: time.minutes - 1,
                         seconds: 59
                     }
@@ -1338,7 +1326,7 @@ var CountDownTimer = function (_React$Component) {
                 // decrement seconds
                 this.setState({
                     time: {
-                        hours: time.hours,
+                        //            hours: time.hours,
                         minutes: time.minutes,
                         seconds: time.seconds - 1
                     }
@@ -1352,8 +1340,6 @@ var CountDownTimer = function (_React$Component) {
         // Resets counter to original state
         value: function reset() {
             var _props = this.props,
-                _props$hours2 = _props.hours,
-                hours = _props$hours2 === undefined ? 0 : _props$hours2,
                 _props$minutes2 = _props.minutes,
                 minutes = _props$minutes2 === undefined ? 0 : _props$minutes2,
                 _props$seconds2 = _props.seconds,
@@ -1362,7 +1348,7 @@ var CountDownTimer = function (_React$Component) {
 
             this.setState({
                 time: {
-                    hours: parseInt(hours, 10),
+                    //                hours: parseInt(hours, 10),
                     minutes: parseInt(minutes, 10),
                     seconds: parseInt(seconds, 10)
                 },
@@ -1409,32 +1395,27 @@ var CountDownTimer = function (_React$Component) {
                 null,
                 _react2.default.createElement(
                     "p",
-                    { className: "" + (!extra ? "stopwatch-time" : "stopwatch-time2") },
+                    { className: (!extra ? "stopwatch-time" : "stopwatch-time2") + " mb-1" },
                     " ",
-                    time.hours.toString().padStart(2, '0') + ":" + time.minutes.toString().padStart(2, '0') + ":" + time.seconds.toString().padStart(2, '0'),
-                    " "
+                    time.minutes.toString().padStart(2, '0') + ":" + time.seconds.toString().padStart(2, '0')
                 ),
                 "  ",
                 over ? _react2.default.createElement(
                     "div",
-                    { className: "pb-4 text-warning fw-bold" },
+                    { className: "pb-2 text-warning fw-bold" },
                     " \xA1Juego terminado! "
                 ) : '',
-                "   ",
                 _react2.default.createElement(
                     "p",
-                    { className: "stopwatch-button" },
+                    { className: "stopwatch-button mb-1" },
                     _react2.default.createElement(
                         "button",
-                        { disabled: over,
-                            onClick: function onClick() {
+                        { disabled: over, onClick: function onClick() {
                                 return _this3.setState({ paused: !paused });
                             } },
                         " ",
-                        paused ? 'CONTINUAR' : 'DETENER',
-                        " "
+                        paused ? 'CONTINUAR' : 'DETENER'
                     ),
-                    "  ",
                     _react2.default.createElement(
                         "button",
                         { disabled: disabled,
@@ -1442,10 +1423,8 @@ var CountDownTimer = function (_React$Component) {
                                 return _this3.reset();
                             } },
                         " INICIAR "
-                    ),
-                    " "
-                ),
-                " "
+                    )
+                )
             );
         }
     }]);
@@ -1721,7 +1700,7 @@ exports = module.exports = __webpack_require__(5)(false);
 
 
 // module
-exports.push([module.i, "body {\n    background-image: url(\"https://osmanmez.github.io/Socces-ScoreBoard/bg.jpg\");\n    font-family: arial;\n    color: #fff;\n    text-transform: uppercase;\n    background-size: cover;\n    background-repeat: no-repeat;\n    background-position: center;\n    background-attachment: fixed;\n}\n\n.scoreboard {\n    background: #333333;\n    /* width: 700px;\n    margin: 70px auto; */\n    box-shadow: 0 4px 0px #333;\n    border-radius: 15px;\n}\n\n.header {\n    padding: 5px 10px;\n    text-align: center;\n    display: flex;\n    align-items: center;\n    background-color: #222;\n    border-radius: 15px 15px 0 0;\n    border-bottom: solid 2px #444;\n}\n\n.header h1 {\n    flex-grow: 1;\n    font-size: 1.5em;\n    letter-spacing: 3px;\n    font-weight: normal;\n}\n\n.text-1 {\n    font-size: 14px;\n}\n\n\n/* .header .stats,\n.header .stopwatch {\n    width: 170px;\n} */\n\n.stats {\n    margin-top: 0;\n    font-weight: normal;\n    width: 100%;\n}\n\n.stats td:first-child {\n    text-align: right;\n    font-weight: bold;\n    letter-spacing: 2px;\n    color: #666;\n    font-size: 1.2em;\n}\n\n.stats td:last-child {\n    text-align: left;\n    width: 40%;\n    font-size: 1.4em;\n}\n\n.stopwatch {\n    padding: 15px 10px 5px 10px;\n    margin: -5px -10px -5px 10px;\n    background: #2f2f2f;\n    border-radius: 0 15px 0 0;\n}\n\n.players {\n    background: #2f2f2f;\n}\n\n.stopwatch-button {\n    font-family: monospace;\n    font-size: 1.8em;\n}\n\n.stopwatch-time {\n    font-family: monospace;\n    font-size: 3em;\n    font-weight: 500;\n}\n\n.stopwatch-time2 {\n    font-family: monospace;\n    font-size: 3em;\n    font-weight: 500;\n    color: red\n}\n\n.stopwatch button {\n    margin: 8px 5px;\n    background-color: #222;\n    border-radius: 5px;\n    padding: 7px 8px;\n    border: none;\n    color: #999;\n    letter-spacing: 2px;\n    font-weight: bold;\n    text-shadow: none;\n    text-transform: uppercase;\n}\n\n.stopwatch button:hover {\n    background: #4b71b5;\n    color: #fafafa;\n    cursor: pointer;\n}\n\n.stopwatch button:disabled,\n.stopwatch button[disabled] {\n    background-color: transparent;\n    color: #666666;\n    cursor: default;\n}\n\n.stopwatch h2 {\n    font-size: .6em;\n    margin: 0;\n    font-weight: normal;\n    letter-spacing: 2px;\n    color: #666;\n}\n\n.title {\n    font-size: 1.8em;\n    font-weight: bold;\n    color: #fff;\n}\n\n.player {\n    display: flex;\n    font-size: 1.2em;\n    border-bottom: solid 2px #444;\n    letter-spacing: 2px;\n}\n\n.remove-player {\n    visibility: hidden;\n    margin-right: 10px;\n    color: #e57373;\n    cursor: pointer;\n}\n\n.player-name:hover .remove-player {\n    visibility: visible;\n}\n\n.player-name {\n    flex-grow: 1;\n    padding: 20px 10px 10px 10px;\n}\n\n.player-score {\n    /* width: 190px; */\n    background: blue;\n}\n\n.counter {\n    display: flex;\n}\n\n.counter-action {\n    border: none;\n    font-weight: bold;\n    color: #FAFAFA;\n    display: block;\n    padding: 20px 20px;\n    cursor: pointer;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n}\n\n.counter-action.increment {\n    background: #66BBFF;\n}\n\n.counter-action.increment:hover {\n    background: #549d59;\n    cursor: pointer;\n}\n\n.counter-action.decrement {\n    background: #ef5350;\n}\n\n.counter-action.decrement:hover {\n    background: #c44442;\n    cursor: pointer;\n}\n\n.counter-score {\n    flex-grow: 1;\n    background: #2b2b2b;\n    color: #FAFAFA;\n    text-align: center;\n    font-family: monospace;\n    padding: 10px;\n    font-size: 2em;\n}\n\n.add-player-form form {\n    display: flex;\n    background-color: #222;\n    border-radius: 0 0 20px 20px\n}\n\n.add-player-form input[type=text] {\n    flex-grow: 1;\n    border-width: 0 0 1px 0;\n    margin: 15px 10px 15px 15px;\n    padding: 10px;\n    border-radius: 5px;\n    background-color: #333;\n    border-style: none;\n    text-shadow: none;\n    text-transform: uppercase;\n    color: #999;\n    letter-spacing: 2px;\n    outline: none;\n}\n\n.add-player-form input[type=text]::-webkit-input-placeholder {\n    color: #666;\n    letter-spacing: 2px;\n}\n\n.add-player-form input[type=text]:focus {\n    background-color: #444;\n}\n\n.add-player-form input[type=submit] {\n    display: block;\n    font-size: .6em;\n    margin: 15px 15px 15px 0;\n    padding: 10px;\n    background-color: #333;\n    border-radius: 5px;\n    border: none;\n    color: #999;\n    letter-spacing: 2px;\n    font-weight: bold;\n    text-shadow: none;\n    text-transform: uppercase;\n}\n\n.add-player-form input[type=submit]:hover {\n    background: #4b71b5;\n    color: #fafafa;\n    cursor: pointer;\n}", ""]);
+exports.push([module.i, "body {\n    background-image: url(\"https://osmanmez.github.io/Socces-ScoreBoard/bg.jpg\");\n    font-family: arial;\n    color: #fff;\n    text-transform: uppercase;\n    background-size: cover;\n    background-repeat: no-repeat;\n    background-position: center;\n    background-attachment: fixed;\n}\n\n@font-face {\n    font-family: alarm;\n    src: local(\"alarm\"), url(\"/fonts/alarm.ttf\") format(\"truetype\");\n}\n\n.scoreboard {\n    background: #333333;\n    /* width: 700px;\n    margin: 70px auto; */\n    box-shadow: 0 4px 0px #333;\n    border-radius: 15px;\n}\n\n.header {\n    padding: 5px 10px;\n    text-align: center;\n    display: flex;\n    align-items: center;\n    background-color: #222;\n    border-radius: 15px 15px 0 0;\n    border-bottom: solid 2px #444;\n}\n\n.header h1 {\n    flex-grow: 1;\n    font-size: 1.5em;\n    letter-spacing: 3px;\n    font-weight: normal;\n}\n\n.text-1 {\n    font-size: 14px;\n}\n\na {\n    text-decoration: none;\n}\n\n\n/* .header .stats,\n.header .stopwatch {\n    width: 170px;\n} */\n\n.stats {\n    margin-top: 0;\n    font-weight: normal;\n    width: 100%;\n}\n\n.stats td:first-child {\n    text-align: right;\n    font-weight: bold;\n    letter-spacing: 2px;\n    color: #666;\n    font-size: 1.2em;\n}\n\n.stats td:last-child {\n    text-align: left;\n    width: 40%;\n    font-size: 1.4em;\n}\n\n.stopwatch {\n    padding: 15px 10px 5px 10px;\n    margin: -5px -10px -5px 10px;\n    background: #2f2f2f;\n    border-radius: 0 15px 0 0;\n}\n\n.players {\n    background: #2f2f2f;\n}\n\n.stopwatch-button {\n    font-family: monospace;\n    font-size: 1.8em;\n}\n\n.stopwatch-time {\n    font-family: alarm;\n    font-size: 6em;\n    font-weight: 500;\n}\n\n.stopwatch-time2 {\n    font-family: alarm;\n    font-size: 6em;\n    font-weight: 500;\n    color: #e60400;\n}\n\n.stopwatch button {\n    margin: 8px 5px;\n    background-color: #222;\n    border-radius: 5px;\n    padding: 7px 8px;\n    border: none;\n    color: #999;\n    letter-spacing: 2px;\n    font-weight: bold;\n    text-shadow: none;\n    text-transform: uppercase;\n}\n\n.stopwatch button:hover {\n    background: #4b71b5;\n    color: #fafafa;\n    cursor: pointer;\n}\n\n.stopwatch button:disabled,\n.stopwatch button[disabled] {\n    background-color: transparent;\n    color: #666666;\n    cursor: default;\n}\n\n.stopwatch h2 {\n    font-size: .6em;\n    margin: 0;\n    font-weight: normal;\n    letter-spacing: 2px;\n    color: #666;\n}\n\n.title {\n    font-size: 1.8em;\n    font-weight: bold;\n    color: #fff;\n}\n\n.player {\n    display: flex;\n    font-size: 1.2em;\n    border-bottom: solid 2px #444;\n    letter-spacing: 2px;\n}\n\n.remove-player {\n    visibility: hidden;\n    margin-right: 10px;\n    color: #e57373;\n    cursor: pointer;\n}\n\n.player-name:hover .remove-player {\n    visibility: visible;\n}\n\n.player-name {\n    flex-grow: 1;\n    padding: 20px 10px 10px 10px;\n}\n\n.player-score {\n    /* width: 190px; */\n    background: blue;\n}\n\n.counter {\n    display: flex;\n}\n\n.counter-action {\n    border: none;\n    font-weight: bold;\n    color: #FAFAFA;\n    display: block;\n    padding: 20px 20px;\n    cursor: pointer;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n}\n\n.counter-action.increment {\n    background: #66BBFF;\n}\n\n.counter-action.increment:hover {\n    background: #549d59;\n    cursor: pointer;\n}\n\n.counter-action.decrement {\n    background: #ef5350;\n}\n\n.counter-action.decrement:hover {\n    background: #c44442;\n    cursor: pointer;\n}\n\n.counter-score {\n    flex-grow: 1;\n    background: #2b2b2b;\n    color: #FAFAFA;\n    text-align: center;\n    font-family: monospace;\n    padding: 10px;\n    font-size: 2em;\n}\n\n.add-player-form form {\n    display: flex;\n    background-color: #222;\n    border-radius: 0 0 20px 20px\n}\n\n.add-player-form input[type=text] {\n    flex-grow: 1;\n    border-width: 0 0 1px 0;\n    margin: 15px 10px 15px 15px;\n    padding: 10px;\n    border-radius: 5px;\n    background-color: #333;\n    border-style: none;\n    text-shadow: none;\n    text-transform: uppercase;\n    color: #999;\n    letter-spacing: 2px;\n    outline: none;\n}\n\n.add-player-form input[type=text]::-webkit-input-placeholder {\n    color: #666;\n    letter-spacing: 2px;\n}\n\n.add-player-form input[type=text]:focus {\n    background-color: #444;\n}\n\n.add-player-form input[type=submit] {\n    display: block;\n    font-size: .6em;\n    margin: 15px 15px 15px 0;\n    padding: 10px;\n    background-color: #333;\n    border-radius: 5px;\n    border: none;\n    color: #999;\n    letter-spacing: 2px;\n    font-weight: bold;\n    text-shadow: none;\n    text-transform: uppercase;\n}\n\n.add-player-form input[type=submit]:hover {\n    background: #4b71b5;\n    color: #fafafa;\n    cursor: pointer;\n}", ""]);
 
 // exports
 
@@ -27883,7 +27862,7 @@ var Stopwatch = function (_React$Component) {
         _react2.default.createElement(
           "div",
           { className: "text-center" },
-          _react2.default.createElement(_CountDownClass2.default, { minutes: 4 })
+          _react2.default.createElement(_CountDownClass2.default, { seconds: 28 })
         )
       );
     }
