@@ -9,6 +9,11 @@ body {
     background-attachment: fixed;
 }
 
+@font-face {
+    font-family: alarm;
+    src: local("alarm"), url("https://osmanmez.github.io/Socces-ScoreBoard/fonts/alarm.ttf") format("truetype");
+}
+
 .scoreboard {
     background: #333333;
     /* width: 700px;
@@ -36,6 +41,10 @@ body {
 
 .text-1 {
     font-size: 14px;
+}
+
+a {
+    text-decoration: none;
 }
 
 
@@ -81,16 +90,16 @@ body {
 }
 
 .stopwatch-time {
-    font-family: monospace;
-    font-size: 3em;
+    font-family: alarm;
+    font-size: 6em;
     font-weight: 500;
 }
 
 .stopwatch-time2 {
-    font-family: monospace;
-    font-size: 3em;
+    font-family: alarm;
+    font-size: 6em;
     font-weight: 500;
-    color: red
+    color: #e60400;
 }
 
 .stopwatch button {
