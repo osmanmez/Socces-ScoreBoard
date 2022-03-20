@@ -16,7 +16,7 @@ body {
 
 @font-face {
     font-family: monospace;
-    src: local("alarm"), url("https://osmanmez.github.io/Socces-ScoreBoard/fonts/Monospace.ttf") format("truetype");
+    src: local("monospace"), url("https://osmanmez.github.io/Socces-ScoreBoard/fonts/monospace.ttf") format("truetype");
 }
 
 .scoreboard {
