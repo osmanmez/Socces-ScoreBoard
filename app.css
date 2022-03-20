@@ -14,6 +14,11 @@ body {
     src: local("alarm"), url("https://osmanmez.github.io/Socces-ScoreBoard/fonts/alarm.ttf") format("truetype");
 }
 
+@font-face {
+    font-family: monospace;
+    src: local("alarm"), url("https://osmanmez.github.io/Socces-ScoreBoard/fonts/Monospace.ttf") format("truetype");
+}
+
 .scoreboard {
     background: #333333;
     /* width: 700px;
@@ -74,8 +79,8 @@ a {
 }
 
 .stopwatch {
-    padding: 15px 10px 5px 10px;
-    margin: -5px -10px -5px 10px;
+    /* padding: 15px 10px 5px 10px; */
+    /* margin: -5px -10px -5px 10px; */
     background: #2f2f2f;
     border-radius: 0 15px 0 0;
 }
@@ -144,7 +149,7 @@ a {
 
 .player {
     display: flex;
-    font-size: 1.2em;
+    font-size: 1.1em;
     border-bottom: solid 2px #444;
     letter-spacing: 2px;
 }
@@ -162,7 +167,7 @@ a {
 
 .player-name {
     flex-grow: 1;
-    padding: 20px 10px 10px 10px;
+    padding: 20px 10px 10px 0px;
 }
 
 .player-score {
